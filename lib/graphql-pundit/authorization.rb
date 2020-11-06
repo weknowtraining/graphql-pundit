@@ -39,10 +39,8 @@ module GraphQL
       def resolve_field(obj, args, ctx)
         if do_authorize(obj, args, ctx)
           super(obj, args, ctx)
-        else
-          if @do_raise
-            raise GraphQL::ExecutionError, "You're not authorized to do this"
-          end
+        elsif @do_raise
+          raise GraphQL::ExecutionError, "You're not authorized to do this"
         end
       end
 
