@@ -94,7 +94,9 @@ RSpec.describe GraphQL::Pundit::Authorization do
   let(:record) { nil }
   let(:policy) { nil }
   let(:field_value) { Car.first.name }
-  let(:result) { field.resolve(Car.first, {}, {}) }
+  let(:ctx) { GraphQL::Query::Context.new(query: GraphQL::Query.new(TestSchema), values: nil, object: nil) }
+  let(:obj) { CarType.authorized_new(Car.first, ctx)}
+  let(:result) { field.resolve(obj, {}, ctx) }
 
   context 'one-line field definition' do
     let(:field) do

@@ -22,6 +22,13 @@ end
 
 Field = GraphQL::Pundit::Field
 
+class TestSchema < GraphQL::Schema
+  class Query < GraphQL::Schema::Object
+  end
+
+  query(Query)
+end
+
 class CarDataset
   attr_reader :cars
 
@@ -101,6 +108,9 @@ class Car
     map { |c| Car.new(c[:name], c[:country]) }
 end
 
+class CarType < GraphQL::Schema::Object
+end
+
 class CarPolicy
   class Scope
     attr_reader :scope
@@ -123,6 +133,12 @@ class CarPolicy
 
   def display_name?
     false
+  end
+end
+
+class CarTypePolicy < CarPolicy
+  def initialize(_user, type)
+    super(_user, type.object)
   end
 end
 

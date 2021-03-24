@@ -120,7 +120,8 @@ RSpec.describe GraphQL::Pundit::Scope do
   let(:before_scope) { nil }
   let(:after_scope) { nil }
   let(:authorize) { nil }
-  let(:result) { field.resolve(Car, {}, {}) }
+  let(:ctx) { GraphQL::Query::Context.new(query: GraphQL::Query.new(TestSchema), values: nil, object: nil) }
+  let(:result) { field.resolve(Car, {}, ctx) }
   context 'one-line field definition' do
     let(:field) do
       Field.new(name: :name,
